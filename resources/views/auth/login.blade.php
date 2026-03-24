@@ -8,7 +8,7 @@
         <br>
         <label for="password">Password:</label>
         <input style="margin-bottom: 1em; width: 10%;" type="password" id="password" name="password" required>
-        <x-error field="email" />
+        <x-error field="password" />
         <br>
         <button type="submit">Log in</button>
     </form>

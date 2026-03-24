@@ -32,7 +32,7 @@ class SessionController extends Controller
         };
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'Something went wrong. Please make sure your username and password are correct.',
         ]);
     }
 
