@@ -26,7 +26,8 @@ class RegisterController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', Password::defaults(), 'confirmed'],
+            'password' => ['required', 'string', Password::defaults()],
+            'password_confirmation' => ['required', 'string', 'same:password'],
         ]);
 
         $user = User::create([
