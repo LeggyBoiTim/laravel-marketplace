@@ -1,7 +1,19 @@
-@extends('layouts.app')
-
-@section('title', $title)
-
-@section('content')
-    <h1>{{ $title }}</h1>
-@endsection
+<x-layout title="Register">
+    <h1>Register</h1>
+    <form action="{{ route('register.store') }}" method="POST">
+        @csrf
+        <label for="name">Name:</label>
+        <input style="margin-bottom: 1em; width: 10%;" type="text" id="name" name="name" required>
+        <br>
+        <label for="email">Email:</label>
+        <input style="margin-bottom: 1em; width: 10%;" type="email" id="email" name="email" required>
+        <br>
+        <label for="password">Password:</label>
+        <input style="margin-bottom: 1em; width: 10%;" type="password" id="password" name="password" required>
+        <br>
+        <label for="password_confirmation">Confirm Password:</label>
+        <input style="margin-bottom: 1em; width: 10%;" type="password" id="password_confirmation" name="password_confirmation" required>
+        <br>
+        <button type="submit">Register</button>
+    </form>
+</x-layout>
