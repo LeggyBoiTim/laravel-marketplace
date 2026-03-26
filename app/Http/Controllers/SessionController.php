@@ -29,7 +29,7 @@ class SessionController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('ads.index');
+            return redirect()->intended('/ads');
         };
 
         return back()->withErrors([

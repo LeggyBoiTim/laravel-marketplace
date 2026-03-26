@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Notifications\RegistrationConfirmed;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
@@ -37,6 +39,8 @@ class RegisterController extends Controller
         ]);
 
         Auth::login($user);
+
+        Notification::send(Auth::user(), new RegistrationConfirmed());
 
         return redirect()->route('ads.index');
     }
