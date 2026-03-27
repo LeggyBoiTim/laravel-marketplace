@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\AdController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\SessionController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\SessionController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
@@ -24,4 +25,9 @@ Route::middleware('guest')->group(function () {
     
     Route::get('/register', [RegisterController::class, 'create'])->name('register.create');
     Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+
+    Route::get('/forgot-password', [ResetPasswordController::class, 'request'])->name('password.request');
+    Route::post('/forgot-password', [ResetPasswordController::class, 'email'])->name('password.email');
+    Route::get('/reset-password/{token}', [ResetPasswordController::class, 'reset'])->name('password.reset');
+    Route::post('/reset-password', [ResetPasswordController::class, 'update'])->name('password.update');
 });
