@@ -1,7 +1,8 @@
-<x-layout title="All Ads">
-    <h1>All Ads</h1>
+<x-layout title="{{ $title }}">
+    <h1>{{ $title }}</h1>
 
     @forelse ($ads as $ad)
+        <hr>
         <div>
             <h2>{{ $ad->title }}</h2>
             <p>By: {{ $ad->user->name }}</p>

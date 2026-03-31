@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 #[Fillable(['ad_id', 'user_id', 'price'])]
 class Bid extends Model
 {
+    use HasFactory;
+
     public function ad(): BelongsTo
     {
         return $this->belongsTo(Ad::class);
