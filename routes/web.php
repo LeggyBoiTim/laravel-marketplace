@@ -4,6 +4,7 @@ use App\Http\Controllers\AdController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\SessionController;
+use App\Http\Controllers\MyAdController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
@@ -15,6 +16,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/ads/{ad}', [AdController::class, 'update'])->name('ads.update');
     Route::delete('/ads/{ad}', [AdController::class, 'destroy'])->name('ads.destroy');
     Route::redirect('/', '/ads');
+
+    Route::get('/my-ads', [MyAdController::class, 'index'])->name('my-ads.index');
 
     Route::delete('/logout', [SessionController::class, 'destroy'])->name('logout');
 });
