@@ -12,7 +12,7 @@ class BidRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,7 @@ class BidRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'price' => ['required', 'numeric', 'min:0'],
         ];
     }
 }

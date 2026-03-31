@@ -4,6 +4,7 @@ use App\Http\Controllers\AdController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\SessionController;
+use App\Http\Controllers\BidController;
 use App\Http\Controllers\MyAdController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,9 @@ Route::middleware('auth')->group(function () {
     Route::redirect('/', '/ads');
 
     Route::get('/my-ads', [MyAdController::class, 'index'])->name('my-ads.index');
+
+    Route::post('/bids', [BidController::class, 'store'])->name('bids.store');
+    Route::delete('/bids/{bid}', [BidController::class, 'destroy'])->name('bids.destroy');
 
     Route::delete('/logout', [SessionController::class, 'destroy'])->name('logout');
 });
