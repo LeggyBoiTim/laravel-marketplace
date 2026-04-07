@@ -19,9 +19,13 @@ class BidFactory extends Factory
      */
     public function definition(): array
     {
+        $ad = Ad::inRandomOrder()->first();
+    
+        $user = User::where('id', '!=', $ad->user_id)->inRandomOrder()->first();
+
         return [
-            'ad_id' => Ad::inRandomOrder()->first()->id,
-            'user_id' => User::inRandomOrder()->first()->id,
+            'ad_id' => $ad->id,
+            'user_id' => $user->id,
             'price' => $this->faker->randomFloat(2, 1, 1000),
         ];
     }
