@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AdRequest;
 use App\Models\Ad;
+use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 
 class AdController extends Controller
@@ -13,8 +14,29 @@ class AdController extends Controller
      */
     public function index()
     {
-        $ads = Ad::all()->sortByDesc('created_at');
-        return view('ads.index', ['title' => 'All Ads'], compact('ads'));
+        $categoryId = request()->query('category');
+        $search = request()->query('search');
+        $query = Ad::query()->orderBy('created_at', 'desc');
+
+        if ($categoryId) { // Filter by category
+            $query->whereHas('categories', function ($q) use ($categoryId) {
+                $q->where('categories.id', $categoryId);
+            });
+        }
+
+        if ($search) { // Search by title, description, or category name
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%$search%")
+                ->orWhere('description', 'like', "%$search%")
+                ->orWhereHas('categories', function ($subQ) use ($search) {
+                    $subQ->where('name', 'like', "%$search%");
+                });
+            });
+        }
+
+        $ads = $query->simplePaginate(10)->withQueryString();
+
+        return view('ads.index', ['title' => 'All Ads', 'categories' => Category::all()], compact('ads'));
     }
 
     /**
@@ -22,7 +44,7 @@ class AdController extends Controller
      */
     public function create()
     {
-        return view('ads.create', ['title' => 'New Ad']);
+        return view('ads.create', ['title' => 'New Ad', 'categories' => Category::all()]);
     }
 
     /**
@@ -35,7 +57,7 @@ class AdController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'price' => $request->price,
-        ]);
+        ])->categories()->attach($request->categories);
 
         return redirect()->route('ads.index');
     }
@@ -53,7 +75,7 @@ class AdController extends Controller
      */
     public function edit(Ad $ad)
     {
-        return view('ads.edit', ['title' => 'Edit Ad'], compact('ad'));
+        return view('ads.edit', ['title' => 'Edit Ad', 'categories' => Category::all()], compact('ad'));
     }
 
     /**
@@ -66,6 +88,8 @@ class AdController extends Controller
             'description' => $request->description,
             'price' => $request->price,
         ]);
+
+        $ad->categories()->sync($request->categories);
 
         return redirect()->route('ads.show', $ad);
     }

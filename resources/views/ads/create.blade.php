@@ -12,6 +12,16 @@
         <x-error field="description" />
         <br><br>
 
+        <span>Categories:</span>
+        @forelse ($categories as $category)
+            <input type="checkbox" name="categories[]" value="{{ $category->id }}" id="category-{{ $category->id }}" style="margin-right: 0em;">
+            <label for="category-{{ $category->id }}" style="margin-right: 0.5em;">{{ $category->name }}</label>
+        @empty
+            <p>No categories available</p>
+        @endforelse
+        <x-error field="categories" />
+        <br><br>
+
         <label for="price">Price:</label>
         <input style="width: 10%;" type="number" id="price" name="price" step="0.01" required>
         <x-error field="price" />

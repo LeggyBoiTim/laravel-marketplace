@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ad;
+use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 
 class MyAdController extends Controller
@@ -11,7 +13,10 @@ class MyAdController extends Controller
      */
     public function index()
     {
-        $ads = Auth::user()->ads->sortByDesc('created_at');
-        return view('ads.index', ['title' => 'My Ads'], compact('ads'));
+        $query = Ad::query()->orderBy('created_at', 'desc');
+
+        $ads = $query->where('user_id', Auth::id())->simplePaginate(10);
+        
+        return view('ads.index', ['title' => 'My Ads', 'categories' => Category::all()], compact('ads'));
     }
 }

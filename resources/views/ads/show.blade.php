@@ -16,14 +16,18 @@
 
     <h2>Place Bid</h2>
     @auth
-        <form action="{{ route('bids.store', $ad) }}" method="POST">
-            @csrf
-            <label for="price">Bid Amount:</label>
-            <input type="number" name="price" id="price" step="0.01" min="0" required>
-            <x-error field="price" />
-            <input type="hidden" name="ad_id" value="{{ $ad->id }}">
-            <button type="submit">Place Bid</button>
-        </form>
+        @if (Auth::id() === $ad->user_id)
+            <p>You cannot place a bid on your own ad.</p>
+        @else
+            <form action="{{ route('bids.store', $ad) }}" method="POST">
+                @csrf
+                <label for="price">Bid Amount:</label>
+                <input type="number" name="price" id="price" step="0.01" min="0" required>
+                <x-error field="price" />
+                <input type="hidden" name="ad_id" value="{{ $ad->id }}">
+                <button type="submit">Place Bid</button>
+            </form>
+        @endif
         <hr>
     @else
         <p><a href="{{ route('login') }}">Log in</a> to place a bid.</p>
