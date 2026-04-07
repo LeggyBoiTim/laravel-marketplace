@@ -9,18 +9,17 @@
 
     @forelse ($ads as $ad)
         <div>
-            <h2>{{ $ad->title }}</h2>
-            <p><b>By: {{ $ad->user->name }}</b></p>
+            <h2 style="margin: 0;">{{ $ad->title }}</h2>
+            <span style="margin-right: 1em;">By: <i>{{ $ad->user->name }}</i></span>
+            <span>Categories: <i>{{ $ad->categories->pluck('name')->join(', ') }}</i></span>
             <p>{{ $ad->description }}</p>
-            <p>Categories: <i>{{ $ad->categories->pluck('name')->join(', ') }}</i></p>
-            <p>Price: ${{ number_format($ad->price, 2) }}</p>
-            <a href="{{ route('ads.show', $ad) }}">View Details</a>
+            <p style="color: darkgreen;">Price: ${{ number_format($ad->price, 2) }}</p>
+            <a href="{{ route('ads.show', $ad) }}"><b>View Details</b></a>
         </div>
         <hr>
     @empty
         <p>No ads found.</p>
     @endforelse
-
     
     @if (url()->current() == route('ads.index'))
         <div style="position: fixed; top: 1em; right: 11em; margin-bottom: 1em;">

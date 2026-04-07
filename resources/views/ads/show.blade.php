@@ -1,7 +1,9 @@
 <x-layout title="{{ $ad->title }}">
-    <h1>{{ $ad->title }}</h1>
+    <h1 style="margin-bottom: 0;">{{ $ad->title }}</h1>
+    <span style="margin-right: 1em;">By: <i>{{ $ad->user->name }}</i></span>
+    <span>Categories: <i>{{ $ad->categories->pluck('name')->join(', ') }}</i></span>
     <p>{{ $ad->description }}</p>
-    <span>Price: ${{ number_format($ad->price, 2) }}</span>
+    <span style="color: darkgreen;">Price: ${{ number_format($ad->price, 2) }}</span>
     @auth
         @if (Auth::id() === $ad->user_id)
             <a href="{{ route('ads.edit', $ad) }}" style="margin-left: 0.25em;"><button>Edit</button></a>
@@ -14,7 +16,7 @@
     @endauth
     <hr>
 
-    <h2>Place Bid</h2>
+    <h2 style="margin-top: 0;">Place Bid</h2>
     @auth
         @if (Auth::id() === $ad->user_id)
             <p>You cannot place a bid on your own ad.</p>
@@ -33,9 +35,9 @@
         <p><a href="{{ route('login') }}">Log in</a> to place a bid.</p>
     @endauth
 
-    <h2>Bids</h2>
+    <h2 style="margin-top: 0;">Bids</h2>
     @forelse ($ad->bids as $bid)
-        <span>${{ number_format($bid->price, 2) }} by {{ $bid->user->name }}</span>
+        <span><span style="color: darkgreen;">${{ number_format($bid->price, 2) }}</span> by <i>{{ $bid->user->name }}</i></span>
         @if (Auth::id() === $bid->user_id)
             <form action="{{ route('bids.destroy', $bid) }}" method="POST" style="display: inline; margin-left: 0.25em;">
                 @csrf
