@@ -12,7 +12,7 @@ class Error extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public string $field,
+        public string $field
     ) {}
 
     /**

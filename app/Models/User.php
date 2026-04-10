@@ -8,7 +8,6 @@ use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -30,9 +29,10 @@ class User extends Authenticatable implements CanResetPassword
         return $this->hasMany(Bid::class);
     }
 
-    public function conversations(): BelongsToMany
+    public function conversations(): HasMany
     {
-        return $this->belongsToMany(Conversation::class, 'conversations', 'user_id_1', 'id')->orWhere('user_id_2', $this->id);
+        return $this->hasMany(Conversation::class, 'user_id_1')
+            ->orWhere('user_id_2', $this->id);
     }
 
     public function messages(): HasMany

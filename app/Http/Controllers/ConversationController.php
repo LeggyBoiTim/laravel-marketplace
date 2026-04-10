@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Conversation;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ConversationController extends Controller
 {
@@ -11,47 +14,36 @@ class ConversationController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $conversations = Conversation::where('user_id_1', Auth::id())
+            ->orWhere('user_id_2', Auth::id())
+            ->with(['userOne', 'userTwo'])
+            ->orderBy('updated_at', 'desc')
+            ->get();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        return view('conversations.index', compact('conversations'));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Conversation $conversation)
     {
-        //
+        return view('conversations.show', compact('conversation'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Store a newly created resource in storage if it doesn't exist, otherwise redirect to the existing conversation.
      */
-    public function edit(string $id)
+    public function findOrCreate(User $otherUser)
     {
-        //
-    }
+        [$userId1, $userId2] = Conversation::orderUserIds(Auth::id(), $otherUser->id);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+        $conversation = Conversation::firstOrCreate([
+            'user_id_1' => $userId1,
+            'user_id_2' => $userId2
+        ]);
+
+        return redirect()->route('conversations.show', $conversation);
     }
 
     /**
