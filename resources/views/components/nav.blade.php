@@ -7,7 +7,15 @@
         <form action="{{ route('logout') }}" method="POST" style="display: inline;">
             @csrf
             @method('DELETE')
-            <button type="submit">Log out</button>
+            <button type="submit" style="margin-right: 1em;">Log out</button>
+        </form>
+        <form action="{{ route('notify-on-message.update', Auth::user()) }}" method="POST" style="display: inline;">
+            @csrf
+            @method('PUT')
+            <input type="checkbox" name="notify_on_message" 
+                value="1" {{ auth()->user()->notify_on_message ? 'checked' : '' }}
+                onchange="this.form.submit();">
+            <label for="notify_on_message">Receive message notifications</label>
         </form>
     @else
         <a href="{{ route('login.create') }}"><button>Log in</button></a>

@@ -8,6 +8,7 @@ use App\Http\Controllers\BidController;
 use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\MyAdController;
+use App\Http\Controllers\UserPreferenceController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
@@ -32,6 +33,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
     Route::delete('/messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
+
+    Route::put('/notify-on-message/{user}', [UserPreferenceController::class, 'update'])->name('notify-on-message.update');
 
     Route::delete('/logout', [SessionController::class, 'destroy'])->name('logout');
 });

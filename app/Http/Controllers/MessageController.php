@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\MessageRequest;
 use App\Models\Conversation;
 use App\Models\Message;
+use App\Notifications\NewMessage;
+use Illuminate\Support\Facades\Notification;
 
 class MessageController extends Controller
 {
@@ -20,6 +22,8 @@ class MessageController extends Controller
         ]);
 
         Conversation::where('id', $request->conversation_id)->update(['updated_at' => now()]);
+
+        Notification::send(Conversation::find($request->conversation_id)->users->where('id', '!=', $request->user_id), new NewMessage());
 
         return redirect()->route('conversations.show', $request->conversation_id);
     }

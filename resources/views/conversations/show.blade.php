@@ -23,7 +23,7 @@
         <input type="hidden" name="user_id" value="{{ auth()->id() }}">
         <input type="hidden" name="conversation_id" value="{{ $conversation->id }}">
         <label for="content">New message:</label><br>
-        <textarea name="content" rows="3" style="width: 25%;"></textarea>
+        <textarea name="content" rows="3" style="width: 25%;"></textarea><br>
         <button type="submit">Send</button>
     </form>
     <br>
