@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['conversation_id', 'user_id', 'body'])]
+#[Fillable(['conversation_id', 'user_id', 'content'])]
 class Message extends Model
 {
     public function conversation(): BelongsTo

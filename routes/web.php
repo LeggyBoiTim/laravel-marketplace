@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\SessionController;
 use App\Http\Controllers\BidController;
 use App\Http\Controllers\ConversationController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\MyAdController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,7 +27,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/inbox', [ConversationController::class, 'index'])->name('conversations.index');
     Route::get('/inbox/{conversation}', [ConversationController::class, 'show'])->name('conversations.show');
-    Route::get('/conversations/find-or-create/{otherUser}', [ConversationController::class, 'findOrCreate'])->name('conversations.findOrCreate');
+    Route::get('/conversations/first-or-create/{otherUser}', [ConversationController::class, 'firstOrCreate'])->name('conversations.firstOrCreate');
+    Route::delete('/conversations/{conversation}', [ConversationController::class, 'destroy'])->name('conversations.destroy');
+
+    Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
+    Route::delete('/messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
 
     Route::delete('/logout', [SessionController::class, 'destroy'])->name('logout');
 });

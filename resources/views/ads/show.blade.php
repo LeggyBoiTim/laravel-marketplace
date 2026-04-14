@@ -13,7 +13,7 @@
                 <button type="submit" onclick="return confirm('Are you sure you want to delete this ad?')">Delete</button>
             </form>
         @else
-            <a href="{{ route('conversations.findOrCreate', $ad->user) }}" style="margin-left: 0.25em;"><button>Message Seller</button></a>
+            <a href="{{ route('conversations.firstOrCreate', $ad->user) }}" style="margin-left: 0.25em;"><button>Message Seller</button></a>
         @endif
     @else
         <p><a href="{{ route('login') }}">Log in</a> to message the seller.</p>
@@ -48,6 +48,8 @@
                 @method('DELETE')
                 <button type="submit" onclick="return confirm('Are you sure you want to delete this bid?')">Delete</button>
             </form>
+        @elseif (Auth::id() === $ad->user_id)
+            <a href="{{ route('conversations.firstOrCreate', $bid->user) }}" style="margin-left: 0.25em;"><button>Message Bidder</button></a>
         @endif
         <br><br>
     @empty

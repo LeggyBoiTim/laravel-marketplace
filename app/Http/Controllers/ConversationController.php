@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Conversation;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ConversationController extends Controller
@@ -34,7 +33,7 @@ class ConversationController extends Controller
     /**
      * Store a newly created resource in storage if it doesn't exist, otherwise redirect to the existing conversation.
      */
-    public function findOrCreate(User $otherUser)
+    public function firstOrCreate(User $otherUser)
     {
         [$userId1, $userId2] = Conversation::orderUserIds(Auth::id(), $otherUser->id);
 
