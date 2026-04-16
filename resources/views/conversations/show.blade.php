@@ -3,16 +3,20 @@
     <hr>
 
     @forelse($conversation->messages as $message)
-        <div style="margin-bottom: 1em;">
-            <strong>{{ $message->user->name }}:</strong><br>
-            <span>{{ $message->content }}</span>
-            @if($message->user_id === Auth::id())
-                <form action="{{ route('messages.destroy', $message) }}" method="POST" style="display: inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit">Delete</button>
-                </form>
-            @endif
+        <div style="display: block; margin-bottom: 1em; width: 25%;">
+            <div style="display: inline-block; width: 80%;">
+                <strong>{{ $message->user->name }}:</strong><br>
+                <span>{{ $message->content }}</span>
+            </div>
+            <div style="display: inline-block; margin-left: 1em;">
+                @if($message->user_id === Auth::id())
+                    <form action="{{ route('messages.destroy', $message) }}" method="POST" style="display: inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this message?')">Delete</button>
+                    </form>
+                @endif
+            </div>
         </div>
     @empty
         <p>No messages yet.</p>
