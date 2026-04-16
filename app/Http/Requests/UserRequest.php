@@ -23,7 +23,7 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'notify_on_message' => ['required', 'boolean'],
+            'notify_on_message' => ['boolean'],
         ];
     }
 }

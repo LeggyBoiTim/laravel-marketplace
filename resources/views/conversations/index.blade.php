@@ -23,7 +23,7 @@
                 <form action="{{ route('conversations.destroy', $conversation) }}" method="POST" style="display: block-inline;">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" onclick="return confirm('Are you sure you want to delete this chat and all of its messages?')">Delete</button>
+                    <button type="submit" onclick="return confirm('Are you sure you want to delete this conversation and all of its messages?')">Delete</button>
                 </form>
             </div>
         </div>
