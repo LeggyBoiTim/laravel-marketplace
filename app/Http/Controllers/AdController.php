@@ -16,7 +16,10 @@ class AdController extends Controller
     {
         $categoryId = request()->query('category');
         $search = request()->query('search');
-        $query = Ad::query()->orderBy('created_at', 'desc');
+        $query = Ad::query()
+            ->orderBy('is_promoted', 'desc')
+            ->orderBy('promoted_at', 'desc')
+            ->orderBy('created_at', 'desc');
 
         if ($categoryId) { // Filter by category
             $query->whereHas('categories', function ($q) use ($categoryId) {

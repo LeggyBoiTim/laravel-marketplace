@@ -23,9 +23,10 @@ class AdRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string', 'max:1000'],
-            'price' => ['required', 'numeric', 'min:0'],
+            'title' => ['required', 'sometimes', 'string', 'max:255'],
+            'description' => ['required', 'sometimes', 'string', 'max:1000'],
+            'price' => ['required', 'sometimes', 'numeric', 'min:0'],
+            'is_promoted' => ['sometimes', 'boolean'],
         ];
     }
 }

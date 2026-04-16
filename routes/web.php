@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdController;
+use App\Http\Controllers\AdPromoteController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\SessionController;
@@ -22,6 +23,8 @@ Route::middleware('auth')->group(function () {
     Route::redirect('/', '/ads');
 
     Route::get('/my-ads', [MyAdController::class, 'index'])->name('my-ads.index');
+
+    Route::put('/ads/{ad}/promote', [AdPromoteController::class, 'update'])->name('ads-promote.update');
 
     Route::post('/bids', [BidController::class, 'store'])->name('bids.store');
     Route::delete('/bids/{bid}', [BidController::class, 'destroy'])->name('bids.destroy');

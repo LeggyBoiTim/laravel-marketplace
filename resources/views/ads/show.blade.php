@@ -12,6 +12,12 @@
                 @method('DELETE')
                 <button type="submit" onclick="return confirm('Are you sure you want to delete this ad?')">Delete</button>
             </form>
+            <form action="{{ route('ads-promote.update', $ad->id) }}" method="POST" style="display: inline;">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="is_promoted" value="{{ true }}">
+                <button type="submit" {{ $ad->is_promoted ? 'disabled' : '' }}>{{ $ad->is_promoted ? 'Ad is promoted!' : 'Promote Ad' }}</button>
+            </form>
         @else
             <a href="{{ route('conversations.firstOrCreate', $ad->user) }}" style="margin-left: 0.25em;"><button>Message Seller</button></a>
         @endif

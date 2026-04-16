@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['user_id', 'title', 'description', 'price'])]
+#[Fillable(['user_id', 'title', 'description', 'price', 'is_promoted', 'promoted_at'])]
 class Ad extends Model
 {
     use HasFactory;
