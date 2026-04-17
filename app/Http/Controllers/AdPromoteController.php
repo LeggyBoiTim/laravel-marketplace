@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AdPromoteRequest;
 use App\Models\Ad;
+use Illuminate\Support\Facades\Gate;
 
 class AdPromoteController extends Controller
 {
@@ -12,6 +13,8 @@ class AdPromoteController extends Controller
      */
     public function update(AdPromoteRequest $request, Ad $ad)
     {
+        Gate::authorize('update', $ad);
+
         $ad->update([
             'is_promoted' => $request->is_promoted,
             'promoted_at' => $request->is_promoted ? now() : null

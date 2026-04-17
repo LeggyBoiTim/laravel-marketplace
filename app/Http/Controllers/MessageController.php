@@ -6,6 +6,7 @@ use App\Http\Requests\MessageRequest;
 use App\Models\Conversation;
 use App\Models\Message;
 use App\Notifications\NewMessage;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Notification;
 
 class MessageController extends Controller
@@ -15,6 +16,8 @@ class MessageController extends Controller
      */
     public function store(MessageRequest $request)
     {
+        Gate::authorize('create', Message::class);
+
         Message::create([
             'conversation_id' => $request->conversation_id,
             'user_id' => $request->user_id,
@@ -33,6 +36,8 @@ class MessageController extends Controller
      */
     public function destroy(Message $message)
     {
+        Gate::authorize('delete', $message);
+
         $message->delete();
 
         Conversation::where('id', $message->conversation_id)->update(['updated_at' => $message->conversation->messages->last()->updated_at ?? now()]);

@@ -3,18 +3,20 @@
     <hr>
 
     @forelse($conversations as $conversation)
-        <div style="display: block; margin-bottom: 1em; width: 25%;">
-            <a href="{{ route('conversations.show', $conversation) }}" style="display:inline-block; width: auto; min-width: 20em; text-decoration: none; color: inherit;">
-                <div style="position: relative;width: 100%; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
-                    <strong>{{ $conversation->otherUser()->name }}</strong><br>
+        <div style="display: block; margin-bottom: 1em; width: fit-content;">
+            <a href="{{ route('conversations.show', $conversation) }}" style="display:inline-block; width: auto; text-decoration: none; color: inherit;">
+                <div style="position: relative; width: 100%; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+                    <strong>{{ $conversation->otherUser()->name }}</strong>
                     @if($conversation->messages->last())
+                        <span style="margin-left: 0.5em;">{{ $conversation->messages->last()->updated_at->diffForHumans() }}</span>
+                        <br>
                         @if($conversation->messages->last()->user_id === Auth::id())
                             <span style="color: gray;">{{ 'You: ' . ($conversation->messages->last()->content) }}</span>
                         @else
                             <span style="color: gray;">{{ $conversation->messages->last()->user->name . ': ' . ($conversation->messages->last()->content) }}</span>
                         @endif
-                        <span style="position: absolute; right: 0.5em; top: 0.5em;">{{ $conversation->messages->last()->updated_at->diffForHumans() }}</span>
                     @else
+                        <br>
                         <span style="color: gray;">No messages yet.</span>
                     @endif
                 </div>

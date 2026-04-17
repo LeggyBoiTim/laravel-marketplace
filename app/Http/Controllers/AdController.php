@@ -6,6 +6,7 @@ use App\Http\Requests\AdRequest;
 use App\Models\Ad;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class AdController extends Controller
 {
@@ -47,6 +48,8 @@ class AdController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Ad::class);
+
         return view('ads.create', ['title' => 'New Ad', 'categories' => Category::all()]);
     }
 
@@ -55,6 +58,8 @@ class AdController extends Controller
      */
     public function store(AdRequest $request)
     {
+        Gate::authorize('create', Ad::class);
+
         Ad::create([
             'user_id' => Auth::id(),
             'title' => $request->title,
@@ -78,6 +83,8 @@ class AdController extends Controller
      */
     public function edit(Ad $ad)
     {
+        Gate::authorize('update', $ad);
+
         return view('ads.edit', ['title' => 'Edit Ad', 'categories' => Category::all()], compact('ad'));
     }
 
@@ -86,6 +93,8 @@ class AdController extends Controller
      */
     public function update(AdRequest $request, Ad $ad)
     {
+        Gate::authorize('update', $ad);
+
         $ad->update([
             'title' => $request->title,
             'description' => $request->description,
@@ -102,6 +111,8 @@ class AdController extends Controller
      */
     public function destroy(Ad $ad)
     {
+        Gate::authorize('delete', $ad);
+
         $ad->delete();
         return redirect()->route('ads.index');
     }

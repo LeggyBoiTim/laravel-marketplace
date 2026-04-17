@@ -1,7 +1,9 @@
 <nav>
-    <a href="{{ route('ads.index') }}"><button style="margin-right: 1em;">All Ads</button></a>
     @auth
         <a href="{{ route('ads.create') }}"><button style="margin-right: 1em;">New Ad</button></a>
+    @endauth
+    <a href="{{ route('ads.index') }}"><button style="margin-right: 1em;">All Ads</button></a>
+    @auth
         <a href="{{ route('my-ads.index') }}"><button style="margin-right: 1em;">My Ads</button></a>
         <a href="{{ route('conversations.index') }}"><button style="margin-right: 1em;">Inbox</button></a>
         <form action="{{ route('logout') }}" method="POST" style="display: inline;">

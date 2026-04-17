@@ -13,15 +13,17 @@ class ConversationPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Conversation $conversation): bool
+    public function view(User $user, Conversation $conversation): Response
     {
-        return $user->id === $conversation->user_one_id || $user->id === $conversation->user_two_id;
+        return $user->id === $conversation->user_id_1 || $user->id === $conversation->user_id_2
+            ? Response::allow()
+            : Response::deny('You do not have access to this conversation.');
     }
 
     /**
@@ -29,23 +31,27 @@ class ConversationPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Conversation $conversation): bool
+    public function update(User $user, Conversation $conversation): Response
     {
-        return $user->id === $conversation->user_one_id || $user->id === $conversation->user_two_id;
+        return $user->id === $conversation->user_id_1 || $user->id === $conversation->user_id_2
+            ? Response::allow()
+            : Response::deny('You do not have access to this conversation.');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Conversation $conversation): bool
+    public function delete(User $user, Conversation $conversation): Response
     {
-        return $user->id === $conversation->user_one_id || $user->id === $conversation->user_two_id;
+        return $user->id === $conversation->user_id_1 || $user->id === $conversation->user_id_2
+            ? Response::allow()
+            : Response::deny('You do not have access to this conversation.');
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Conversation;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ConversationController extends Controller
 {
@@ -13,6 +14,8 @@ class ConversationController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', Conversation::class);
+
         $conversations = Conversation::where('user_id_1', Auth::id())
             ->orWhere('user_id_2', Auth::id())
             ->with(['userOne', 'userTwo'])
@@ -27,6 +30,8 @@ class ConversationController extends Controller
      */
     public function show(Conversation $conversation)
     {
+        Gate::authorize('view', $conversation);
+
         return view('conversations.show', compact('conversation'));
     }
 
@@ -35,6 +40,8 @@ class ConversationController extends Controller
      */
     public function firstOrCreate(User $otherUser)
     {
+        Gate::authorize('create', Conversation::class);
+
         [$userId1, $userId2] = Conversation::orderUserIds(Auth::id(), $otherUser->id);
 
         $conversation = Conversation::firstOrCreate([
@@ -50,6 +57,8 @@ class ConversationController extends Controller
      */
     public function destroy(Conversation $conversation)
     {
+        Gate::authorize('delete', $conversation);
+
         $conversation->delete();
         
         return redirect()->route('conversations.index');

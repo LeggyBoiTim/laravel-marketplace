@@ -35,17 +35,21 @@ class BidPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Bid $bid): bool
+    public function update(User $user, Bid $bid): Response
     {
-        return $user->id === $bid->user_id;
+        return $user->id === $bid->user_id
+            ? Response::allow()
+            : Response::deny('You do not own this bid.');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Bid $bid): bool
+    public function delete(User $user, Bid $bid): Response
     {
-        return $user->id === $bid->user_id;
+        return $user->id === $bid->user_id
+            ? Response::allow()
+            : Response::deny('You do not own this bid.');
     }
 
     /**

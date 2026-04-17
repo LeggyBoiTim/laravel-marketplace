@@ -2,26 +2,25 @@
 
 namespace App\Policies;
 
-use App\Models\Ad;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class AdPolicy
+class UserPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return false;
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Ad $ad): bool
+    public function view(User $user, User $model): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -29,33 +28,29 @@ class AdPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return false;
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Ad $ad): Response
+    public function update(User $user, User $model): bool
     {
-        return $user->id === $ad->user_id
-            ? Response::allow()
-            : Response::deny('You do not own this ad.');
+        return $user->id === $model->id;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Ad $ad): Response
+    public function delete(User $user, User $model): bool
     {
-        return $user->id === $ad->user_id
-            ? Response::allow()
-            : Response::deny('You do not own this ad.');
+        return false;
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Ad $ad): bool
+    public function restore(User $user, User $model): bool
     {
         return false;
     }
@@ -63,7 +58,7 @@ class AdPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Ad $ad): bool
+    public function forceDelete(User $user, User $model): bool
     {
         return false;
     }

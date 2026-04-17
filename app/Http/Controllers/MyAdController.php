@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ad;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class MyAdController extends Controller
 {
@@ -13,6 +14,8 @@ class MyAdController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', Ad::class);
+
         $query = Ad::query()->orderBy('created_at', 'desc');
 
         $ads = $query->where('user_id', Auth::id())->simplePaginate(10);
