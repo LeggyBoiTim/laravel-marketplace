@@ -4,7 +4,7 @@
 
     @forelse($conversation->messages as $message)
         <div style="display: block; margin-bottom: 1em; width: 25%;">
-            <div style="display: inline-block; width: 80%;">
+            <div style="display: inline-block; width: auto;">
                 <strong>{{ $message->user->name }}:</strong><br>
                 <span>{{ $message->content }}</span>
             </div>

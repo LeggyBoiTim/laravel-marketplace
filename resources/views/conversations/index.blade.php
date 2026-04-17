@@ -4,7 +4,7 @@
 
     @forelse($conversations as $conversation)
         <div style="display: block; margin-bottom: 1em; width: 25%;">
-            <a href="{{ route('conversations.show', $conversation) }}" style="display:inline-block; width: 80%; text-decoration: none; color: inherit;">
+            <a href="{{ route('conversations.show', $conversation) }}" style="display:inline-block; width: auto; min-width: 20em; text-decoration: none; color: inherit;">
                 <div style="position: relative;width: 100%; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
                     <strong>{{ $conversation->otherUser()->name }}</strong><br>
                     @if($conversation->messages->last())

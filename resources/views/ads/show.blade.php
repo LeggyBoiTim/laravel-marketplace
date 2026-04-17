@@ -22,7 +22,7 @@
             <a href="{{ route('conversations.firstOrCreate', $ad->user) }}" style="margin-left: 0.25em;"><button>Message Seller</button></a>
         @endif
     @else
-        <p><a href="{{ route('login') }}">Log in</a> to message the seller.</p>
+        <p><a href="{{ route('login.create') }}">Log in</a> to message the seller.</p>
     @endauth
     <hr>
 
@@ -40,10 +40,10 @@
                 <button type="submit">Place Bid</button>
             </form>
         @endif
-        <hr>
     @else
-        <p><a href="{{ route('login') }}">Log in</a> to place a bid.</p>
+        <p><a href="{{ route('login.create') }}">Log in</a> to place a bid.</p>
     @endauth
+    <hr>
 
     <h2 style="margin-top: 0;">Bids</h2>
     @forelse ($ad->bids as $bid)
