@@ -15,7 +15,7 @@ class BidController extends Controller
     public function store(BidRequest $request)
     {
         Gate::authorize('create', Bid::class);
-
+        // ad_id validation
         Bid::create([
             'ad_id' => $request->ad_id,
             'user_id' => Auth::id(),

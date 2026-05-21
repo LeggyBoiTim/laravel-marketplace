@@ -23,6 +23,7 @@ class SessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        //redundant validation 
         $credentials = $request->validate([
             'email' => ['required', 'email', 'string', 'max:255'],
             'password' => ['required', 'string', Password::defaults()],
@@ -43,6 +44,7 @@ class SessionController extends Controller
      */
     public function destroy()
     {
+        // Logout the user and invalidate the session
         Auth::logout();
         return redirect()->route('login.create');
     }

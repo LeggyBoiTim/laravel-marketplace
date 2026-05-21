@@ -20,6 +20,7 @@ class MessageController extends Controller
 
         Message::create([
             'conversation_id' => $request->conversation_id,
+            // user_id validation
             'user_id' => $request->user_id,
             'content' => $request->content,
         ]);
